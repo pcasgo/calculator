@@ -9,4 +9,9 @@ export class AddController {
   addTwoNumbers(@Body() numbersDto: NumbersDto): Promise<any> {
     return this.addService.addTwoNumbers(numbersDto);
   }
+
+  @Post('/test')
+  test(): Promise<any> {
+    return this.addService.test();
+  }
 }
