@@ -20,3 +20,11 @@ Para consumir servicio SOAP:
     cd project
     npm install
     npm run start
+
+
+// TODOs: Pendientes por hacer
+
+- Crear utilitario para consumo de soap
+- Integrar front
+- Ambientar / Dockerizar
+- Refactorizar metodos en service
