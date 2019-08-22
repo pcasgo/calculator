@@ -9,34 +9,33 @@ export class AddService {
       (numbersDto.numberTwo === undefined ? 0 : numbersDto.numberTwo)}`;
   }
 
-  async test(): Promise<any> {
-    const request = require('request');
+  async test(numbersDto: NumbersDto): Promise<any> {
+    const unirest = require('unirest');
 
-    const options = {
-      method: 'POST',
-      url: 'http://www.dneonline.com/calculator.asmx',
-      qs: { WSDL: '' },
-      headers:
-      {
-        'cache-control': 'no-cache',
-        'Connection': 'keep-alive',
-        'Content-Length': '283',
-        'Accept-Encoding': 'gzip, deflate',
-        'Host': 'www.dneonline.com',
-        'Postman-Token': '9f16019b-a0fd-48ab-8bca-32ba9767aedc,cdc15d67-05f4-4c96-955c-419bbeb3f7aa',
-        'Cache-Control': 'no-cache',
-        'Accept': '*/*',
-        'User-Agent': 'PostmanRuntime/7.15.2',
-        'Content-Type': 'text/xml',
-      },
-      // tslint:disable-next-line: max-line-length
-      body: '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tem="http://tempuri.org/">\n   <soapenv:Header/>\n   <soapenv:Body>\n      <tem:Add>\n         <tem:intA>1</tem:intA>\n         <tem:intB>2</tem:intB>\n      </tem:Add>\n   </soapenv:Body>\n</soapenv:Envelope>',
-    };
-
-    // tslint:disable-next-line: only-arrow-functions
-    request(options, function(error, response, body) {
-      if (error) { throw new Error(error); }
-      console.log(response);
-    });
+    function getResult() {
+      return new Promise((resolve, reject) => {
+        unirest.post('http://www.dneonline.com/calculator.asmx')
+          .headers({
+            'cache-control': 'no-cache',
+            'Connection': 'keep-alive',
+            'Content-Length': '283',
+            'Accept-Encoding': 'gzip, deflate',
+            'Host': 'www.dneonline.com',
+            'Postman-Token': 'adf96ff7-01ec-4e8b-9258-1a34a1f8b2b2,c8aa09cd-96a2-45d7-be66-7a1cdc1d743d',
+            'Cache-Control': 'no-cache',
+            'Accept': '*/*',
+            'User-Agent': 'PostmanRuntime/7.15.2',
+            'Content-Type': 'text/xml',
+          })
+          // tslint:disable-next-line: max-line-length
+          .send(`<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tem="http://tempuri.org/">\n   <soapenv:Header/>\n   <soapenv:Body>\n      <tem:Add>\n         <tem:intA>${numbersDto.numberOne}</tem:intA>\n         <tem:intB>${numbersDto.numberTwo}</tem:intB>\n      </tem:Add>\n   </soapenv:Body>\n</soapenv:Envelope>`)
+          // tslint:disable-next-line: only-arrow-functions
+          .end(function (response) {
+            if (response.error) { return reject(Error); }
+            return resolve(response.body);
+          });
+      });
+    }
+    getResult().then((body) => console.log('success', body)).catch((error) => console.log('error', error))
   }
 }
