@@ -11,7 +11,7 @@ export class AddController {
   }
 
   @Post('/test')
-  test(): Promise<any> {
-    return this.addService.test();
+  test(@Body() numbersDto: NumbersDto): Promise<any> {
+    return this.addService.test(numbersDto);
   }
 }
