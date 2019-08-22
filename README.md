@@ -10,6 +10,10 @@ Para consumir servicio SOAP:
 ```sh
  npm install --save xml-js
 ```
+>Class-validator para agregar decoradores y validaciones basicas:
+```sh
+ npm install class-validator --save
+```
 >Para inicializar este proyecto se utilizo Nestjs y se los comandos para levantarlo son:
 >Clonar repositorio:
 ```sh
