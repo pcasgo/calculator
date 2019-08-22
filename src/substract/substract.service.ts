@@ -24,7 +24,7 @@ export class SubstractService {
         // tslint:disable-next-line: max-line-length
         .send(`<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tem="http://tempuri.org/">\n    <soapenv:Header/>\n    <soapenv:Body>\n        <tem:Subtract>\n            <tem:intA>${numbersDto.numberOne}</tem:intA>\n            <tem:intB>${numbersDto.numberTwo}</tem:intB>\n        </tem:Subtract>\n    </soapenv:Body>\n</soapenv:Envelope>`)
         // tslint:disable-next-line: only-arrow-functions
-        .end(function (response) {
+        .end(function(response) {
           const convert = require('xml-js');
           if (response.error) { return reject(Error); }
           const xmlToJson = convert.xml2json(response.body, { compact: true, spaces: 4 });
